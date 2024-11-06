@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baromètre des Positions Internationales sur le Sahara marocain</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        /* Conteneur principal */
+        .main-container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* Conteneur du baromètre avec 50% de largeur */
+        .barometer-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Conteneur de la liste des pays avec 50% de largeur */
+        .country-container {
+            flex: 1;
+            max-height: 500px;
+            overflow-y: scroll;
+            border: 1px solid #ddd;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        /* Style du baromètre */
+        .barometer {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+            height: 150px;
+            border-top-left-radius: 150px;
+            border-top-right-radius: 150px;
+            background: linear-gradient(to right, black, red, orange, lightgreen, green);
+            overflow: hidden;
+        }
+
+        /* Style de l'aiguille */
+        .needle {
+            position: absolute;
+            width: 4px;
+            height: 150px;
+            background-color: black;
+            bottom: 0;
+            left: 50%;
+            transform-origin: bottom center;
+            transform: rotate(-90deg);
+            transition: transform 0.5s ease;
+        }
+
+        /* Style des boutons de pays */
+        .country-button {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .country-button:hover {
+            background-color: #f0f0f0;
+        }
+
+        .country-button img {
+            width: 20px;
+            height: 15px;
+            margin-right: 8px;
+        }
+
+        /* Zone de couleur pour le texte */
+        #position-display {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Baromètre des Positions Internationales sur le Sahara marocain</h1>
+    
+    <div class="main-container">
+        <!-- Conteneur du baromètre à gauche (50%) -->
+        <div class="barometer-container">
+            <div class="barometer">
+                <div class="needle" id="needle"></div>
+            </div>
+            <div id="position-display">Sélectionnez un pays pour voir sa position</div>
+        </div>
+
+        <!-- Liste défilante des pays à droite (50%) -->
+        <div class="country-container" id="country-container">
+
+            <!-- Les boutons pour chaque pays avec drapeau -->
+
+<div class="country-button" onclick="updatePosition(150, 'Afghanistan', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/af.png" alt="Afghanistan"> Afghanistan
+</div>
+
+<div class="country-button" onclick="updatePosition(180, 'Albanie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/al.png" alt="Albanie"> Albanie
+</div>
+<div class="country-button" onclick="updatePosition(0, 'Algérie', 'soutient activement l'indépendance de la pseudo RASD')">
+    <img src="https://flagcdn.com/w20/dz.png" alt="Algérie"> Algérie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Andorre', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ad.png" alt="Andorre"> Andorre
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Angola', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ao.png" alt="Angola"> Angola
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Antigua-et-Barbuda', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ag.png" alt="Antigua-et-Barbuda"> Antigua-et-Barbuda
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Arabie Saoudite', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/sa.png" alt="Arabie Saoudite"> Arabie Saoudite
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Argentine', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ar.png" alt="Argentine"> Argentine
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Arménie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/am.png" alt="Arménie"> Arménie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Australie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/au.png" alt="Australie"> Australie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Autriche', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/at.png" alt="Autriche"> Autriche
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Azerbaïdjan', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/az.png" alt="Azerbaïdjan"> Azerbaïdjan
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Bahamas', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/bs.png" alt="Bahamas"> Bahamas
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Bahreïn', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/bh.png" alt="Bahreïn"> Bahreïn
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Bangladesh', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/bd.png" alt="Bangladesh"> Bangladesh
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Barbade', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/bb.png" alt="Barbade"> Barbade
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Belgique', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/be.png" alt="Belgique"> Belgique
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Belize', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/bz.png" alt="Belize"> Belize
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Bénin', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/bj.png" alt="Bénin"> Bénin
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Bhoutan', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/bt.png" alt="Bhoutan"> Bhoutan
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Biélorussie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/by.png" alt="Biélorussie"> Biélorussie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Birmanie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/mm.png" alt="Birmanie"> Birmanie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Bolivie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/bo.png" alt="Bolivie"> Bolivie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Bosnie-Herzégovine', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ba.png" alt="Bosnie-Herzégovine"> Bosnie-Herzégovine
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Botswana', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/bw.png" alt="Botswana"> Botswana
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Brésil', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/br.png" alt="Brésil"> Brésil
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Brunei', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/bn.png" alt="Brunei"> Brunei
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Bulgarie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/bg.png" alt="Bulgarie"> Bulgarie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Burkina Faso', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/bf.png" alt="Burkina Faso"> Burkina Faso
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Burundi', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/bi.png" alt="Burundi"> Burundi
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Cambodge', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/kh.png" alt="Cambodge"> Cambodge
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Cameroun', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/cm.png" alt="Cameroun"> Cameroun
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Canada', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ca.png" alt="Canada"> Canada
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Cap-Vert', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/cv.png" alt="Cap-Vert"> Cap-Vert
+</div>
+<div class="country-button" onclick="updatePosition(180, 'République Centrafricaine', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/cf.png" alt="République Centrafricaine"> République Centrafricaine
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Chili', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/cl.png" alt="Chili"> Chili
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Chine', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/cn.png" alt="Chine"> Chine
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Chypre', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/cy.png" alt="Chypre"> Chypre
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Colombie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/co.png" alt="Colombie"> Colombie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Comores', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/km.png" alt="Comores"> Comores
+</div>
+<div class="country-button" onclick="updatePosition(180, 'République Démocratique du Congo', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/cd.png" alt="République Démocratique du Congo"> République Démocratique du Congo
+</div>
+<div class="country-button" onclick="updatePosition(180, 'République du Congo', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/cg.png" alt="République du Congo"> République du Congo
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Corée du Nord', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/kp.png" alt="Corée du Nord"> Corée du Nord
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Corée du Sud', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/kr.png" alt="Corée du Sud"> Corée du Sud
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Costa Rica', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/cr.png" alt="Costa Rica"> Costa Rica
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Côte d\'Ivoire', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ci.png" alt="Côte d'Ivoire"> Côte d'Ivoire
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Croatie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/hr.png" alt="Croatie"> Croatie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Cuba', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/cu.png" alt="Cuba"> Cuba
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Danemark', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/dk.png" alt="Danemark"> Danemark
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Djibouti', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/dj.png" alt="Djibouti"> Djibouti
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Dominique', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/dm.png" alt="Dominique"> Dominique
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Égypte', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/eg.png" alt="Égypte"> Égypte
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Émirats arabes unis', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ae.png" alt="Émirats arabes unis"> Émirats arabes unis
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Équateur', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ec.png" alt="Équateur"> Équateur
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Érythrée', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/er.png" alt="Érythrée"> Érythrée
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Espagne', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/es.png" alt="Espagne"> Espagne
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Estonie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ee.png" alt="Estonie"> Estonie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'États-Unis', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/us.png" alt="États-Unis"> États-Unis
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Eswatini', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/sz.png" alt="Eswatini"> Eswatini
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Éthiopie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/et.png" alt="Éthiopie"> Éthiopie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Fidji', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/fj.png" alt="Fidji"> Fidji
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Finlande', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/fi.png" alt="Finlande"> Finlande
+</div>
+<div class="country-button" onclick="updatePosition(180, 'France', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/fr.png" alt="France"> France
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Gabon', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ga.png" alt="Gabon"> Gabon
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Gambie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/gm.png" alt="Gambie"> Gambie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Géorgie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ge.png" alt="Géorgie"> Géorgie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Ghana', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/gh.png" alt="Ghana"> Ghana
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Grèce', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/gr.png" alt="Grèce"> Grèce
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Grenade', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/gd.png" alt="Grenade"> Grenade
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Guatemala', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/gt.png" alt="Guatemala"> Guatemala
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Guinée', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/gn.png" alt="Guinée"> Guinée
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Guinée-Bissau', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/gw.png" alt="Guinée-Bissau"> Guinée-Bissau
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Guinée équatoriale', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/gq.png" alt="Guinée équatoriale"> Guinée équatoriale
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Guyana', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/gy.png" alt="Guyana"> Guyana
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Haïti', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ht.png" alt="Haïti"> Haïti
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Honduras', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/hn.png" alt="Honduras"> Honduras
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Hongrie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/hu.png" alt="Hongrie"> Hongrie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Inde', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/in.png" alt="Inde"> Inde
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Indonésie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/id.png" alt="Indonésie"> Indonésie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Irak', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/iq.png" alt="Irak"> Irak
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Iran', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ir.png" alt="Iran"> Iran
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Irlande', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ie.png" alt="Irlande"> Irlande
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Islande', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/is.png" alt="Islande"> Islande
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Israël', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/il.png" alt="Israël"> Israël
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Italie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/it.png" alt="Italie"> Italie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Jamaïque', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/jm.png" alt="Jamaïque"> Jamaïque
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Japon', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/jp.png" alt="Japon"> Japon
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Jordanie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/jo.png" alt="Jordanie"> Jordanie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Kazakhstan', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/kz.png" alt="Kazakhstan"> Kazakhstan
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Kenya', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ke.png" alt="Kenya"> Kenya
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Kirghizistan', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/kg.png" alt="Kirghizistan"> Kirghizistan
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Kiribati', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ki.png" alt="Kiribati"> Kiribati
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Koweït', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/kw.png" alt="Koweït"> Koweït
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Laos', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/la.png" alt="Laos"> Laos
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Lesotho', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ls.png" alt="Lesotho"> Lesotho
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Lettonie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/lv.png" alt="Lettonie"> Lettonie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Liban', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/lb.png" alt="Liban"> Liban
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Liberia', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/lr.png" alt="Liberia"> Liberia
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Libye', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ly.png" alt="Libye"> Libye
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Liechtenstein', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/li.png" alt="Liechtenstein"> Liechtenstein
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Lituanie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/lt.png" alt="Lituanie"> Lituanie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Luxembourg', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/lu.png" alt="Luxembourg"> Luxembourg
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Macédoine du Nord', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/mk.png" alt="Macédoine du Nord"> Macédoine du Nord
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Madagascar', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/mg.png" alt="Madagascar"> Madagascar
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Malaisie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/my.png" alt="Malaisie"> Malaisie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Malawi', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/mw.png" alt="Malawi"> Malawi
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Maldives', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/mv.png" alt="Maldives"> Maldives
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Mali', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ml.png" alt="Mali"> Mali
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Malte', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/mt.png" alt="Malte"> Malte
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Marshall', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/mh.png" alt="Marshall"> Marshall
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Île Maurice', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/mu.png" alt="Île Maurice"> Île Maurice
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Mauritanie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/mr.png" alt="Mauritanie"> Mauritanie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Mexique', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/mx.png" alt="Mexique"> Mexique
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Micronésie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/fm.png" alt="Micronésie"> Micronésie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Moldavie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/md.png" alt="Moldavie"> Moldavie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Monaco', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/mc.png" alt="Monaco"> Monaco
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Mongolie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/mn.png" alt="Mongolie"> Mongolie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Monténégro', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/me.png" alt="Monténégro"> Monténégro
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Mozambique', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/mz.png" alt="Mozambique"> Mozambique
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Namibie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/na.png" alt="Namibie"> Namibie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Nauru', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/nr.png" alt="Nauru"> Nauru
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Népal', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/np.png" alt="Népal"> Népal
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Nicaragua', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ni.png" alt="Nicaragua"> Nicaragua
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Niger', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ne.png" alt="Niger"> Niger
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Nigeria', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ng.png" alt="Nigeria"> Nigeria
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Norvège', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/no.png" alt="Norvège"> Norvège
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Nouvelle-Zélande', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/nz.png" alt="Nouvelle-Zélande"> Nouvelle-Zélande
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Oman', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/om.png" alt="Oman"> Oman
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Ouganda', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ug.png" alt="Ouganda"> Ouganda
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Ouzbékistan', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/uz.png" alt="Ouzbékistan"> Ouzbékistan
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Pakistan', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/pk.png" alt="Pakistan"> Pakistan
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Palaos', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/pw.png" alt="Palaos"> Palaos
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Panama', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/pa.png" alt="Panama"> Panama
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Papouasie-Nouvelle-Guinée', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/pg.png" alt="Papouasie-Nouvelle-Guinée"> Papouasie-Nouvelle-Guinée
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Paraguay', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/py.png" alt="Paraguay"> Paraguay
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Pays-Bas', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/nl.png" alt="Pays-Bas"> Pays-Bas
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Pérou', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/pe.png" alt="Pérou"> Pérou
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Philippines', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ph.png" alt="Philippines"> Philippines
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Pologne', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/pl.png" alt="Pologne"> Pologne
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Portugal', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/pt.png" alt="Portugal"> Portugal
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Qatar', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/qa.png" alt="Qatar"> Qatar
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Roumanie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ro.png" alt="Roumanie"> Roumanie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Royaume-Uni', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/gb.png" alt="Royaume-Uni"> Royaume-Uni
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Russie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ru.png" alt="Russie"> Russie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Rwanda', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/rw.png" alt="Rwanda"> Rwanda
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Saint-Kitts-et-Nevis', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/kn.png" alt="Saint-Kitts-et-Nevis"> Saint-Kitts-et-Nevis
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Sainte-Lucie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/lc.png" alt="Sainte-Lucie"> Sainte-Lucie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Saint-Vincent-et-les-Grenadines', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/vc.png" alt="Saint-Vincent-et-les-Grenadines"> Saint-Vincent-et-les-Grenadines
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Salomon', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/sb.png" alt="Salomon"> Salomon
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Salvador', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/sv.png" alt="Salvador"> Salvador
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Samoa', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ws.png" alt="Samoa"> Samoa
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Saint-Marin', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/sm.png" alt="Saint-Marin"> Saint-Marin
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Sao Tomé-et-Principe', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/st.png" alt="Sao Tomé-et-Principe"> Sao Tomé-et-Principe
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Sénégal', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/sn.png" alt="Sénégal"> Sénégal
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Serbie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/rs.png" alt="Serbie"> Serbie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Seychelles', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/sc.png" alt="Seychelles"> Seychelles
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Sierra Leone', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/sl.png" alt="Sierra Leone"> Sierra Leone
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Singapour', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/sg.png" alt="Singapour"> Singapour
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Slovaquie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/sk.png" alt="Slovaquie"> Slovaquie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Slovénie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/si.png" alt="Slovénie"> Slovénie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Somalie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/so.png" alt="Somalie"> Somalie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Soudan', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/sd.png" alt="Soudan"> Soudan
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Soudan du Sud', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ss.png" alt="Soudan du Sud"> Soudan du Sud
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Sri Lanka', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/lk.png" alt="Sri Lanka"> Sri Lanka
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Suède', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/se.png" alt="Suède"> Suède
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Suisse', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ch.png" alt="Suisse"> Suisse
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Suriname', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/sr.png" alt="Suriname"> Suriname
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Syrie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/sy.png" alt="Syrie"> Syrie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Tadjikistan', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/tj.png" alt="Tadjikistan"> Tadjikistan
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Tanzanie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/tz.png" alt="Tanzanie"> Tanzanie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Tchad', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/td.png" alt="Tchad"> Tchad
+</div>
+<div class="country-button" onclick="updatePosition(180, 'République Tchèque', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/cz.png" alt="République Tchèque"> République Tchèque
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Thaïlande', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/th.png" alt="Thaïlande"> Thaïlande
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Timor oriental', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/tl.png" alt="Timor oriental"> Timor oriental
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Togo', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/tg.png" alt="Togo"> Togo
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Tonga', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/to.png" alt="Tonga"> Tonga
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Trinité-et-Tobago', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/tt.png" alt="Trinité-et-Tobago"> Trinité-et-Tobago
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Tunisie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/tn.png" alt="Tunisie"> Tunisie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Turkménistan', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/tm.png" alt="Turkménistan"> Turkménistan
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Turquie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/tr.png" alt="Turquie"> Turquie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Tuvalu', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/tv.png" alt="Tuvalu"> Tuvalu
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Ukraine', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ua.png" alt="Ukraine"> Ukraine
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Uruguay', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/uy.png" alt="Uruguay"> Uruguay
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Vanuatu', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/vu.png" alt="Vanuatu"> Vanuatu
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Venezuela', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ve.png" alt="Venezuela"> Venezuela
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Viêt Nam', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/vn.png" alt="Viêt Nam"> Viêt Nam
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Yémen', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/ye.png" alt="Yémen"> Yémen
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Zambie', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/zm.png" alt="Zambie"> Zambie
+</div>
+<div class="country-button" onclick="updatePosition(180, 'Zimbabwe', 'considère le Sahara comme marocain.')">
+    <img src="https://flagcdn.com/w20/zw.png" alt="Zimbabwe"> Zimbabwe
+</div>
+
+        </div>
+    </div>
+
+    <script>
+        function updatePosition(angle, countryName, message) {
+            const needle = document.getElementById('needle');
+            const display = document.getElementById('position-display');
+            
+            // Mettre à jour la rotation de l'aiguille
+            needle.style.transform = `rotate(${angle - 90}deg)`;
+            
+            // Mettre à jour le message en incluant le nom du pays
+            display.textContent = `${countryName} ${message}`;
+        }
+    </script>
+</body>
+</html>
